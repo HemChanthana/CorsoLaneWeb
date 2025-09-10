@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace CorsoLaneWeb.Pages
 {
-    public class LoginAndSignUpPageModel : PageModel
+    public class loginPagecshtmlModel : PageModel
     {
         public void OnGet()
         {

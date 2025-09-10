@@ -1,0 +1,15 @@
+﻿body, input, button, label, a {
+    font-family: 'Inter', sans-serif;
+}
+
+.card {
+    border-radius: 12px;
+}
+
+.btn-primary {
+    font-weight: 600;
+}
+
+h2 {
+    font-weight: 700;
+}
