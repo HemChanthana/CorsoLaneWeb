@@ -1,0 +1,8 @@
+﻿
+@media (min-width: 992px) {
+    .dropdown:hover .dropdown-menu {
+        background-color: #ec5e2a; 
+        display: block;
+        margin-top: 0; /* remove the gap so it doesn't close unexpectedly */
+    }
+}

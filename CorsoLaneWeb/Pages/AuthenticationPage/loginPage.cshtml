@@ -1,6 +1,7 @@
 ﻿@page
 @model CorsoLaneWeb.Pages.AuthenticationPage.loginPageModel
 @{
+	ViewData["Title"] = "Login Page";
 }
 
 <head>
@@ -31,8 +32,8 @@
                 <!-- Controls max width -->
                 <div class="login-container">
              
-                    <div class="login_bar" style="background:#ec5e2a">
-                        <h1 class="text-center mb-4">Login</h1>
+                    <div class="login_bar" style="background:#ec5e2a  ">
+                        <h1 class="text-center mb-5">Login</h1>
                     </div>
            
                     <form method="post">
@@ -49,8 +50,8 @@
                         </div>
                     </form>
                     <div class="d-flex justify-content-between login_links">
-                        <a href="#">Create account</a>
-                        <a href="#">Forgot your password?</a>
+                        <a class="" asp-page="/AuthenticationPage/resgisterPage">Create account</a>
+                        <a class href="#">Forgot your password?</a>
                     </div>
                 </div> 
                 <!--End of Login Container-->

@@ -13,7 +13,14 @@
 </head>
 <body>
     <header>
-		<partial name="ReusablePages/_navbarPage" />
+		@if (User.Identity.IsAuthenticated)
+		{
+			<partial name="ReusablePages/_navbarPageAuth" />
+		}
+		else
+		{
+			<partial name="ReusablePages/_navbarPage" />
+		})
     </header>
     <div class="container">
         <main role="main" class="pb-3">

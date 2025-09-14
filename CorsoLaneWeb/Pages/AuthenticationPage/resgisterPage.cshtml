@@ -1,10 +1,51 @@
 ﻿@page
 @model CorsoLaneWeb.Pages.AuthenticationPage.resgisterPageModel
 @{
+	ViewData["Title"] = "Register";
 }
 
-<head>
 
-	<link rel=""
-</head>
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-lg-5">
+            <div class="card shadow-lg">
+                <div class="card-body p-4 p-md-5">
+                    <h2 class="text-center mb-4 fw-bold">Create Account</h2>
+                    <form id="registerForm" method="post">
+                        
+                        <div class="form-floating mb-3">
+                            <input name="Input.FullName" id="Input_FullName" class="form-control" autocomplete="name" placeholder="Full Name" value="" />
+                            <label for="Input_FullName">Full Name</label>
+                            </div>
 
+                        <div class="form-floating mb-3">
+                            <input name="Input.Email" id="Input_Email" class="form-control" autocomplete="username" placeholder="name@example.com" value="" />
+                            <label for="Input_Email">Email</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input name="Input.Password" id="Input_Password" type="password" class="form-control" autocomplete="new-password" placeholder="Password" />
+                            <label for="Input_Password">Password</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input name="Input.ConfirmPassword" id="Input_ConfirmPassword" type="password" class="form-control" autocomplete="new-password" placeholder="Confirm Password" />
+                            <label for="Input_ConfirmPassword">Confirm Password</label>
+                        </div>
+
+                        <button id="registerSubmit" type="submit" class="w-100 btn btn-primary btn-lg mt-3">Register</button>
+
+                    </form>
+                    <hr class="my-4">
+                    <div class="text-center">
+                        <p class="mb-0">Already have an account? <a asp-page="./LoginPage">Log in</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @*<partial name="_ValidationScriptsPartial" />*@
+}
