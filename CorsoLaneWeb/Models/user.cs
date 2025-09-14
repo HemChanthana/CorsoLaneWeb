@@ -4,18 +4,17 @@ using Microsoft.AspNetCore.Identity;
 
 namespace CorsoLaneWeb.Models
 {
-    public class user : IdentityUser 
+    public class user : IdentityUser<int>
     {
-        public int UserId { get; set; }           // PK
-        public string Name { get; set; }
-        public string Email { get; set; }         // Unique
-        public string PasswordHash { get; set; }
-        public string Phone { get; set; }
-        public string Role { get; set; }          // "Customer" or "Admin"
+        // Add only your custom properties here
+        public string user_fullname { get; set; }
 
-        // Navigation properties
+        // The "Role" property is usually not stored directly here.
+        // Roles are managed through Identity's role management system.
+        // public string Role { get; set; } // It's better to remove this.
+
+        // Navigation properties are fine
         public ICollection<Order> Orders { get; set; }
-
 
     }
 }

@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace CorsoLaneWeb.Pages
+namespace CorsoLaneWeb.Pages.AuthenticationPage
 {
-    public class loginPagecshtmlModel : PageModel
+    public class loginPageModel : PageModel
     {
         public void OnGet()
         {
