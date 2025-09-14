@@ -9,8 +9,17 @@ namespace CorsoLaneWeb.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(configuration.GetConnectionString("Data Source=DESKTOP-KN6CMME;Initial Catalog=CorsoLaneEC;Integrated Security=True;Trust Server Certificate=True")); // Add your connection string here
+            optionsBuilder.UseSqlServer(configuration.GetConnectionString("")); // Add your connection string here
         }
         
+        DbSet<Order> Orders { get; set; }
+        DbSet<Categories> Categories { get; set; }
+       
+        DbSet<user> Users { get; set; } 
+
+        
+
+
+
     }
 }

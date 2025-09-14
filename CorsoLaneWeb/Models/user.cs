@@ -1,9 +1,10 @@
 ﻿
 using System.Net;
+using Microsoft.AspNetCore.Identity;
 
 namespace CorsoLaneWeb.Models
 {
-    public class user
+    public class user : IdentityUser 
     {
         public int UserId { get; set; }           // PK
         public string Name { get; set; }
