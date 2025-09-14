@@ -11,7 +11,7 @@ namespace CorsoLaneWeb.Models
         public int Id { get; set; } // Primary Key
 
         // --- User Relationship ---
-        public int UserId { get; set; } // Foreign Key to the User table
+        public string UserId { get; set; } // Foreign Key to the User table
         [ForeignKey("UserId")]
         public user User { get; set; }
 

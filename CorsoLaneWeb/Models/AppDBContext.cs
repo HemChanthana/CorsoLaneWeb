@@ -1,35 +1,25 @@
-﻿using Azure;
+﻿// Add these using statements at the top
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
 namespace CorsoLaneWeb.Models
 {
-    public class AppDBContext(IConfiguration configuration) : DbContext
+    // 1. Inherit from IdentityDbContext<user>
+    // 2. Use the correct constructor
+    public class AppDBContext : IdentityDbContext<user>
     {
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public AppDBContext(DbContextOptions<AppDBContext> options) : base(options)
         {
-            optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection")); // Add your connection string here
         }
-        
-        DbSet<Order> Orders { get; set; }
 
-        DbSet<products_entity> products { get; set; }
+        // Your custom DbSets go here
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<products_entity> products { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<SubCategory> SubCategories { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
 
-
-        DbSet<Category> Categories { get; set; }
-       
-        DbSet<user> Users { get; set; } 
-        
-        DbSet<SubCategory> SubCategories { get; set; }
-
-        DbSet<OrderItem> OrderItems { get; set; }
-
-
-
-        
-
-
-
+        // REMOVED: The OnConfiguring method is no longer needed here.
+        // REMOVED: The DbSet<user> is inherited from IdentityDbContext.
     }
 }

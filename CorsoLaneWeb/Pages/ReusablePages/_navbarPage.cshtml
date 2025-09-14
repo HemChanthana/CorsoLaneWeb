@@ -1,4 +1,10 @@
-﻿<nav class="navbar navbar-expand-lg bg-light px-4">
+﻿
+
+<head>
+    <link rel="stylesheet" href="~/css/navbar_unauth.css"/>
+</head>
+
+<nav class="navbar navbar-expand-lg bg-light px-4">
     <div class="container-fluid">
         <a class="navbar-brand fw-bold fs-2" asp-page="/Index">CORSO LANE</a>
 
@@ -7,14 +13,30 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarNav">
-
             <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href="#">Men</a>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Men
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Shirts</a></li>
+                        <li><a class="dropdown-item" href="#">Pants</a></li>
+                        <li><a class="dropdown-item" href="#">Shoes</a></li>
+                    </ul>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href="#">Women</a>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Women
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Dresses</a></li>
+                        <li><a class="dropdown-item" href="#">Skirts</a></li>
+                        <li><a class="dropdown-item" href="#">Jewelry</a></li>
+                    </ul>
                 </li>
+
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Explore
@@ -26,6 +48,7 @@
                         <li><a class="dropdown-item" href="#">On Sale</a></li>
                     </ul>
                 </li>
+
             </ul>
 
             <ul class="navbar-nav">
@@ -33,13 +56,13 @@
                     <a class="nav-link text-dark" href="#">Search</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-dark" asp-page="/AuthenticationPage/loginPage">Login</a>
+                    <a class="nav-link text-dark" asp-area="Identity"
+                       asp-page="/Account/Login">Login</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-dark" href="#">Cart (0)</a>
                 </li>
             </ul>
-
         </div>
     </div>
 </nav>
