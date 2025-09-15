@@ -13,13 +13,13 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 
 
-
+builder.Services.AddDbContext<AppDBContext>(options =>
+    options.UseSqlServer(connectionString));
 
 builder.Services.AddDefaultIdentity<user>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<AppDBContext>();
-builder.Services.AddDbContext<AppDBContext>(options =>
-    options.UseSqlServer(connectionString));
+
 
 
 
