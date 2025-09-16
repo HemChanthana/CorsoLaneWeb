@@ -6,15 +6,16 @@ namespace CorsoLaneWeb.Models
     {
 
         [Key]
-        public int Id { get; set; }       // PK
+        public int Id { get; set; }     
+        
+        [Required]// PK
         public string Name { get; set; }
 
-
-
-        public ICollection<SubCategory> SubCategories
+           
+        public IEnumerable<SubCategory> SubCategories
         {
             get; set;
-            // Navigation properties
+            
 
         }
     }

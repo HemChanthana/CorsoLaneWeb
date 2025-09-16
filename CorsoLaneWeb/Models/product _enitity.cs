@@ -13,13 +13,16 @@ namespace CorsoLaneWeb.Models
 
         public string Description { get; set; }
 
+        [Required]
+        public string Size { get; set; }
 
-
+        [Required]
+        public string Color { get; set; }
 
         [Required]
         public decimal Price { get; set; } // Use 'decimal' for currency to avoid rounding errors
 
-
+        public string ImagePath { get; set; } // Store the path or URL of the image
 
         [NotMapped]
         [Display(Name = "Product Image")]

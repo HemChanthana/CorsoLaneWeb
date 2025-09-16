@@ -20,6 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Pages\AdminControllerPage\Order\" />
+    <Folder Include="Pages\AdminControllerPage\Products\" />
+    <Folder Include="Pages\AdminControllerPage\SubCategory\" />
     <Folder Include="wwwroot\Images\" />
   </ItemGroup>
 
