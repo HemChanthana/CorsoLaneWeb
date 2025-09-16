@@ -11,12 +11,7 @@ namespace CorsoLaneWeb.Models
         [Required]// PK
         public string Name { get; set; }
 
-           
-        public IEnumerable<SubCategory> SubCategories
-        {
-            get; set;
-            
 
-        }
+        public ICollection<SubCategory> SubCategories { get; set; } = new List<SubCategory>();
     }
 }
