@@ -9,7 +9,7 @@ namespace CorsoLaneWeb.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(configuration.GetConnectionString("")); // Add your connection string here
+            optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection")); // Add your connection string here
         }
         
         DbSet<Order> Orders { get; set; }
