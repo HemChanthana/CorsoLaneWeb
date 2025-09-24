@@ -1,0 +1,29 @@
+﻿@page
+@model CorsoLaneWeb.Pages.AdminControllerPage.Sub_CategoryEntiity.AddSub_CategoryEntityModel
+@{
+}
+
+
+
+<h2>Add SubCategory</h2>
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="NewSubCategory.Name">SubCategory Name</label>
+        <input asp-for="NewSubCategory.Name" class="form-control" />
+        <span asp-validation-for="NewSubCategory.Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Select Category</label>
+        <select asp-for="SelectedCategoryId" asp-items="Model.Categories" class="form-control">
+            <option value="">-- Select Category --</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-2">Add SubCategory</button>
+</form>
+
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}

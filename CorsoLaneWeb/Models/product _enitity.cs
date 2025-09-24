@@ -6,7 +6,7 @@ namespace CorsoLaneWeb.Models
     public class products_entity
     {
         [Key]
-        public int Id { get; set; } // Primary Key
+        public int Id { get; set; }
 
         [Required]
         public string Name { get; set; }
@@ -20,9 +20,9 @@ namespace CorsoLaneWeb.Models
         public string Color { get; set; }
 
         [Required]
-        public decimal Price { get; set; } // Use 'decimal' for currency to avoid rounding errors
+        public decimal Price { get; set; }
 
-        public string ImagePath { get; set; } // Store the path or URL of the image
+        public string ImagePath { get; set; }
 
         [NotMapped]
         [Display(Name = "Product Image")]
@@ -31,16 +31,9 @@ namespace CorsoLaneWeb.Models
         public int StockQuantity { get; set; }
 
 
-        // --- Relationship to SubCategory ---
 
-        // 1. Foreign Key property
-        // This holds the ID of the SubCategory this product belongs to.
+        // Each Product belongs to ONE SubCategory
         public int SubCategoryId { get; set; }
-
-        // 2. Navigation property
-        // This allows you to access the related SubCategory object from a Product.
-        // For example: myProduct.SubCategory.Name
-        [ForeignKey("SubCategoryId")]
         public SubCategory SubCategory { get; set; }
     }
 }

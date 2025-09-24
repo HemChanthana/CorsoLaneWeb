@@ -7,18 +7,10 @@ namespace CorsoLaneWeb.Models
 
 
     {
-        [Key]
-        public int Id { get; set; } // Primary Key
+        public int Id { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
 
-        // --- Relationship Properties ---
-
-        // 1. Foreign Key to the Category class
-        public int CategoryId { get; set; }
-
-        // 2. Navigation property to the parent Category
-        [ForeignKey("CategoryId")]
-        public Category Category { get; set; }
+        public ICollection<CategorySubCategory> CategorySubCategories { get; set; } = new List<CategorySubCategory>();
+        public ICollection<products_entity> Products { get; set; } = new List<products_entity>();
     }
 }

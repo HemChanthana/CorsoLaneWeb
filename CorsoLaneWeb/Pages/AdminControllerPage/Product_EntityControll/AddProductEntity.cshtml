@@ -1,0 +1,47 @@
+﻿@page
+@model CorsoLaneWeb.Pages.AdminControllerPage.Product_EntityControll.AddProductEntityModel
+@{
+}
+<h2>Add Product</h2>
+
+<form method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label asp-for="NewProduct.Name"></label>
+        <input asp-for="NewProduct.Name" class="form-control" />
+        <span asp-validation-for="NewProduct.Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="NewProduct.Description"></label>
+        <input asp-for="NewProduct.Description" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="NewProduct.Size"></label>
+        <input asp-for="NewProduct.Size" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="NewProduct.Color"></label>
+        <input asp-for="NewProduct.Color" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="NewProduct.Price"></label>
+        <input asp-for="NewProduct.Price" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="NewProduct.StockQuantity"></label>
+        <input asp-for="NewProduct.StockQuantity" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label>Select SubCategory</label>
+        <select asp-for="NewProduct.SubCategoryId" asp-items="Model.SubCategories" class="form-control">
+            <option value="">-- Select SubCategory --</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-2">Add Product</button>
+</form>

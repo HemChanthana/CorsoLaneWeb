@@ -1,0 +1,42 @@
+﻿@page
+@model CorsoLaneWeb.Pages.AdminControllerPage.AddLinkingCategoryPageModel
+@{
+}
+
+
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <h2 class="text-white text-center">Link Category and SubCategory</h2>
+    </div>
+    <div class="card-body p-4">
+        <form method="post" class="row">
+            <div class="form-floating py-2 col-12">
+                <select asp-for="JoinEntity.CategoryId" class="form-select" asp-items="Model.Categories">
+                    <option value="">-- Select Category --</option>
+                </select>
+                <label asp-for="JoinEntity.CategoryId">Category</label>
+                <span asp-validation-for="JoinEntity.CategoryId" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating py-2 col-12">
+                <select asp-for="JoinEntity.SubCategoryId" class="form-select" asp-items="Model.SubCategories">
+                    <option value="">-- Select SubCategory --</option>
+                </select>
+                <label asp-for="JoinEntity.SubCategoryId">SubCategory</label>
+                <span asp-validation-for="JoinEntity.SubCategoryId" class="text-danger"></span>
+            </div>
+
+            <div class="row pt-3">
+                <div class="col-6 col-md-3">
+                    <button type="submit" class="btn btn-primary form-control">Link</button>
+                </div>
+                <div class="col-6 col-md-3">
+                    <a asp-page="/Admin/Index" class="btn btn-outline-secondary form-control">Cancel</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+                s

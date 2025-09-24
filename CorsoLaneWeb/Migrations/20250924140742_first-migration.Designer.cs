@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CorsoLaneWeb.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20250915170536_CreateIdentitySchema")]
-    partial class CreateIdentitySchema
+    [Migration("20250924140742_first-migration")]
+    partial class firstmigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,6 +40,21 @@ namespace CorsoLaneWeb.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("CorsoLaneWeb.Models.CategorySubCategory", b =>
+                {
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SubCategoryId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CategoryId", "SubCategoryId");
+
+                    b.HasIndex("SubCategoryId");
+
+                    b.ToTable("CategorySubCategories");
                 });
 
             modelBuilder.Entity("CorsoLaneWeb.Models.Order", b =>
@@ -128,20 +143,11 @@ namespace CorsoLaneWeb.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
 
                     b.ToTable("SubCategories");
                 });
@@ -154,7 +160,15 @@ namespace CorsoLaneWeb.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Color")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImagePath")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -164,6 +178,10 @@ namespace CorsoLaneWeb.Migrations
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Size")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("StockQuantity")
                         .HasColumnType("int");
@@ -384,6 +402,25 @@ namespace CorsoLaneWeb.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("CorsoLaneWeb.Models.CategorySubCategory", b =>
+                {
+                    b.HasOne("CorsoLaneWeb.Models.Category", "Category")
+                        .WithMany("CategorySubCategories")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CorsoLaneWeb.Models.SubCategory", "SubCategory")
+                        .WithMany("CategorySubCategories")
+                        .HasForeignKey("SubCategoryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("SubCategory");
+                });
+
             modelBuilder.Entity("CorsoLaneWeb.Models.Order", b =>
                 {
                     b.HasOne("CorsoLaneWeb.Models.user", "User")
@@ -414,21 +451,10 @@ namespace CorsoLaneWeb.Migrations
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("CorsoLaneWeb.Models.SubCategory", b =>
-                {
-                    b.HasOne("CorsoLaneWeb.Models.Category", "Category")
-                        .WithMany("SubCategories")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-                });
-
             modelBuilder.Entity("CorsoLaneWeb.Models.products_entity", b =>
                 {
                     b.HasOne("CorsoLaneWeb.Models.SubCategory", "SubCategory")
-                        .WithMany()
+                        .WithMany("Products")
                         .HasForeignKey("SubCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -489,12 +515,19 @@ namespace CorsoLaneWeb.Migrations
 
             modelBuilder.Entity("CorsoLaneWeb.Models.Category", b =>
                 {
-                    b.Navigation("SubCategories");
+                    b.Navigation("CategorySubCategories");
                 });
 
             modelBuilder.Entity("CorsoLaneWeb.Models.Order", b =>
                 {
                     b.Navigation("OrderItems");
+                });
+
+            modelBuilder.Entity("CorsoLaneWeb.Models.SubCategory", b =>
+                {
+                    b.Navigation("CategorySubCategories");
+
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("CorsoLaneWeb.Models.user", b =>

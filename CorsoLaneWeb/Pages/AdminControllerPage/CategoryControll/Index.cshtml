@@ -1,0 +1,90 @@
+﻿@page
+@model CorsoLaneWeb.Pages.AdminControllerPage.CategoryControll.IndexModel
+@{
+}
+
+
+<head>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Google Fonts Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+
+    <!-- Page-specific CSS -->
+    <link rel="stylesheet" href="~/css/IndexCategory.css" />
+
+</head>
+<div class="container my-5">
+    <div class="row">
+        <div class="d-flex justify-content-between mb-2">
+            <h3>Category List</h3>
+            <a class="btn btn-success" asp-page="/category/create" role="button">Create</a>
+        </div>
+        <!-- Blog entries-->
+        <div class="col-lg-12">
+            @if (Model.Categories.Count() > 0)
+            {
+                <div class="card p-3">
+                    <table id="datatable"
+                           class="table table-striped"
+                           style="width: 100%">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Category</th>
+                                <th style="width: 200px">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int i = 0;
+                                @foreach (var item in Model.Categories)
+                                {
+                                    <tr>
+                                        <td>@(++i)</td>
+                                        <td>@item.Name</td>
+                                        <td>
+                                            <a class="btn btn-primary btn-sm"
+                                               asp-page="/Category/editCategory"
+                                               asp-route-id="@item.Id"
+                                               role="button">Edit</a>
+
+                                            <a class="btn btn-danger btn-sm"
+                                               asp-page="/Category/deleteCategory"
+                                               asp-route-id="@item.Id">
+                                                Delete
+                                            </a>
+
+
+                                        </td>
+
+                                    </tr>
+
+                                }
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>No</th>
+                                <th>Tag</th>
+                                <th>Action</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="border mt-3">
+                    <p class="text-center">No Data</p>
+                </div>
+
+            }
+
+        </div>
+    </div>
+</div>

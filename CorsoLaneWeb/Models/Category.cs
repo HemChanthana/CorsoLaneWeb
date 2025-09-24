@@ -5,13 +5,13 @@ namespace CorsoLaneWeb.Models
     public class Category
     {
 
-        [Key]
-        public int Id { get; set; }     
-        
-        [Required]// PK
+        public int Id { get; set; }
         public string Name { get; set; }
 
 
-        public ICollection<SubCategory> SubCategories { get; set; } = new List<SubCategory>();
+
+        // Many-to-many with SubCategory via join table
+
+        public ICollection<CategorySubCategory> CategorySubCategories { get; set; } = new List<CategorySubCategory>(); 
     }
 }

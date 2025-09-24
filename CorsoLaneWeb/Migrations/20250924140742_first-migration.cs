@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CorsoLaneWeb.Migrations
 {
     /// <inheritdoc />
-    public partial class first_migrations : Migration
+    public partial class firstmigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -62,6 +62,19 @@ namespace CorsoLaneWeb.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Categories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SubCategories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SubCategories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -198,24 +211,27 @@ namespace CorsoLaneWeb.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SubCategories",
+                name: "CategorySubCategories",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CategoryId = table.Column<int>(type: "int", nullable: false)
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    SubCategoryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SubCategories", x => x.Id);
+                    table.PrimaryKey("PK_CategorySubCategories", x => new { x.CategoryId, x.SubCategoryId });
                     table.ForeignKey(
-                        name: "FK_SubCategories_Categories_CategoryId",
+                        name: "FK_CategorySubCategories_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_CategorySubCategories_SubCategories_SubCategoryId",
+                        column: x => x.SubCategoryId,
+                        principalTable: "SubCategories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -226,7 +242,10 @@ namespace CorsoLaneWeb.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Size = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Color = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     StockQuantity = table.Column<int>(type: "int", nullable: false),
                     SubCategoryId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -309,6 +328,11 @@ namespace CorsoLaneWeb.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CategorySubCategories_SubCategoryId",
+                table: "CategorySubCategories",
+                column: "SubCategoryId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_OrderItems_OrderId",
                 table: "OrderItems",
                 column: "OrderId");
@@ -327,11 +351,6 @@ namespace CorsoLaneWeb.Migrations
                 name: "IX_products_SubCategoryId",
                 table: "products",
                 column: "SubCategoryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SubCategories_CategoryId",
-                table: "SubCategories",
-                column: "CategoryId");
         }
 
         /// <inheritdoc />
@@ -353,10 +372,16 @@ namespace CorsoLaneWeb.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "CategorySubCategories");
+
+            migrationBuilder.DropTable(
                 name: "OrderItems");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "Orders");
@@ -369,9 +394,6 @@ namespace CorsoLaneWeb.Migrations
 
             migrationBuilder.DropTable(
                 name: "SubCategories");
-
-            migrationBuilder.DropTable(
-                name: "Categories");
         }
     }
 }

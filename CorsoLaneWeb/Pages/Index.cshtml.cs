@@ -6,7 +6,7 @@ namespace CorsoLaneWeb.Pages
 {
 
 
-    [Authorize(Roles = "Customer")]
+ 
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
