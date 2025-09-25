@@ -2,7 +2,24 @@
 @model CorsoLaneWeb.Pages.AdminControllerPage.Product_EntityControll.AddProductEntityModel
 @{
 }
+
+<head>
+    <link rel="stylesheet" href="~/css/AddCategoryStyling.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="~/css/IndexProduct.css" />
+</head>
+
+
+<body>
+
+
 <h2>Add Product</h2>
+
+<div asp-validation-summary="All"></div>
 
 <form method="post" enctype="multipart/form-data">
     <div class="form-group">
@@ -36,12 +53,25 @@
         <input asp-for="NewProduct.StockQuantity" class="form-control" />
     </div>
 
+    <div class="mb-3">
+        <label asp-for="NewProduct.ImageFile" class="form-label">Choose Your Image</label>
+        <input class="form-control"
+               type="file"
+               accept="image/*"
+               asp-for="NewProduct.ImageFile" />
+    </div>
+
     <div class="form-group">
         <label>Select SubCategory</label>
-        <select asp-for="NewProduct.SubCategoryId" asp-items="Model.SubCategories" class="form-control">
-            <option value="">-- Select SubCategory --</option>
+        <!---->
+        <select asp-for="NewProduct.SubCategoryId"
+                asp-items="Model.SubCategoriesOption"
+                class="form-control">
+            <option value="">-- Select a SubCategory --</option>
         </select>
+        <span asp-validation-for="NewProduct.SubCategoryId" class="text-danger"></span>
     </div>
 
     <button type="submit" class="btn btn-primary mt-2">Add Product</button>
 </form>
+</body>

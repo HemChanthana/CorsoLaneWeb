@@ -25,12 +25,17 @@ namespace CorsoLaneWeb.Pages.AdminControllerPage.CategoryControll
         public async Task<IActionResult> onPost() 
         {
 
+            if (ModelState.IsValid)
+            {
+                var existState = await db.Categories.FindAsync(category.Id);
+                existState.Name = category.Name;
+                await db.SaveChangesAsync();
+                return RedirectToPage("/categoryControll/Index");
 
-        
-            
-            
-            return RedirectToPage("/AdminControllerPage/CategoryControll/CategoryList");
-            
+            }
+            return Page();
+
+
         }
     }
 }

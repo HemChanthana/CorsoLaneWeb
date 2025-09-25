@@ -1,5 +1,5 @@
 ﻿@page
-@model CorsoLaneWeb.Pages.AdminControllerPage.CategoryControll.IndexModel
+@model CorsoLaneWeb.Pages.AdminControllerPage.Product_EntityControll.IndexModel
 @{
 }
 
@@ -26,7 +26,7 @@
         </div>
         <!-- Blog entries-->
         <div class="col-lg-12">
-            @if (Model.Categories.Count() > 0)
+            @if (Model.products.Count() > 0)
             {
                 <div class="card p-3">
                     <table id="datatable"
@@ -42,19 +42,19 @@
                         <tbody>
                             @{
                                 int i = 0;
-                                @foreach (var item in Model.Categories)
+                                @foreach (var item in Model.products)
                                 {
                                     <tr>
                                         <td>@(++i)</td>
                                         <td>@item.Name</td>
                                         <td>
                                             <a class="btn btn-primary btn-sm"
-                                               asp-page="/AdminControllerPage/CategoryControll/EditCategory"
+                                               asp-page="/AdminControllerPage/Product_EntityControll/EditProductEntity"
                                                asp-route-id="@item.Id"
                                                role="button">Edit</a>
 
                                             <a class="btn btn-danger btn-sm"
-                                               asp-page="/AdminControllerPage/CategoryControll/DeleteCategory"
+                                               asp-page="/AdminControllerPage/Product_EntityControll/DeleteProductEntity"
                                                asp-route-id="@item.Id">
                                                 Delete
                                             </a>

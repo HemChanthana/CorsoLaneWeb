@@ -43,6 +43,7 @@ namespace CorsoLaneWeb.Pages.AdminControllerPage.Sub_CategoryEntiity
                     CategoryId = SelectedCategoryId,
                     SubCategoryId = NewSubCategory.Id
                 };
+                // Implement a join table to links 
                 db.CategorySubCategories.Add(join);
                 db.SaveChanges();
             }

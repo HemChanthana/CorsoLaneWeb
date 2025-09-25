@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace CorsoLaneWeb.Pages.AdminControllerPage.Product_EntityControll
+namespace CorsoLaneWeb.Pages.AdminControllerPage.CategoryControll
 {
-    public class UpdateProductEntityModel : PageModel
+    public class DeleteCategoryModel : PageModel
     {
         public void OnGet()
         {
