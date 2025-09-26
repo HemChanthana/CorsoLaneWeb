@@ -54,14 +54,14 @@ namespace CorsoLaneWeb.Pages.AdminControllerPage.Product_EntityControll
             if (EditProduct.ImageFile != null)
             {
                 var fileName = Path.GetFileName(EditProduct.ImageFile.FileName);
-                var filePath = Path.Combine("wwwroot/images/products", fileName);
+                var filePath = Path.Combine("wwwroot/uploads", fileName);
 
                 using (var stream = System.IO.File.Create(filePath))
                 {
                     await EditProduct.ImageFile.CopyToAsync(stream);
                 }
 
-                productInDb.ImagePath = "/images/products/" + fileName;
+                productInDb.ImagePath = "wwwroot/uploads" + fileName;
             }
 
             await db.SaveChangesAsync();

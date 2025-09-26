@@ -1,0 +1,78 @@
+﻿@page
+@model CorsoLaneWeb.Pages.AdminControllerPage.DashboardModel
+@{
+}
+
+
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Google Fonts Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+
+    <!-- Page-specific CSS -->
+    <link rel="stylesheet" href="~/css/IndexStyling.css" />
+
+
+</head>
+<header>
+  <!-- Sidebar -->
+  <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
+    <div class="position-sticky">
+      <div class="list-group list-group-flush mx-3 mt-4">
+        <a
+          href="#"
+          class="list-group-item list-group-item-action py-2 ripple"
+          aria-current="true"
+        >
+          <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Admin dashboard</span>
+        </a>
+        <a href="#" class="list-group-item list-group-item-action py-2 ripple active">
+          <i class="fas fa-chart-area fa-fw me-3"></i><span>View Customer</span>
+        </a>
+        <a asp-page="/AdminControllerPage/Sub_CategoryEntiity/Index1" class="list-group-item list-group-item-action py-2 ripple"
+          ><i class="fas fa-lock fa-fw me-3"></i><span>Manage SubCategories  </span> </a>
+
+
+
+        <a asp-page="/AdminControllerPage/CategoryControll/Index" class="list-group-item list-group-item-action py-2 ripple"
+          ><i class="fas fa-chart-line fa-fw me-3"></i><span>Manage Category</span></a>
+
+
+
+
+                <a asp-page="/AdminControllerPage/Product_EntityControll/Index" class="list-group-item list-group-item-action py-2 ripple">
+          <i class="fas fa-chart-pie fa-fw me-3"></i><span>Manage Prouducts</span>
+        </a>
+        <a asp-page="" class="list-group-item list-group-item-action py-2 ripple"
+          ><i class="fas fa-chart-bar fa-fw me-3"></i><span>Track Orders</span></a>
+      
+      </div>
+
+    </div>
+  </nav>
+  <!-- Sidebar -->
+
+  <!-- Navbar -->
+  
+  <!-- Navbar -->
+</header>
+<!--Main Navigation-->
+
+<!--Main layout-->
+<main style="margin-top: 58px;">
+  <div class="container pt-4"></div>
+</main>
+
+
+
+<script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</script>
+
+
+
+ 

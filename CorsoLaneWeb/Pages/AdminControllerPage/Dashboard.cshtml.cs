@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace CorsoLaneWeb.Pages.AdminControllerPage.Sub_CategoryEntiity
+namespace CorsoLaneWeb.Pages.AdminControllerPage
 {
-    public class UpdateSub_CategoryEntityModel : PageModel
+    public class DashboardModel : PageModel
     {
         public void OnGet()
         {
