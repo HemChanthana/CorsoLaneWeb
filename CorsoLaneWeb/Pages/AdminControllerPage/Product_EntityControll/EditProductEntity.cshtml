@@ -5,8 +5,68 @@
 
 
 
-<h1>
-	Edit Product Entity
-</h1> 
+<head>
+    <link rel="stylesheet" href="~/css/AddCategoryStyling.css" />
+    <link rel="stylesheet" href="~/css/IndexProduct.css" />
+</head>
 
+<body>
+    <h2>Edit Product</h2>
 
+    <div asp-validation-summary="All"></div>
+
+    <form method="post" enctype="multipart/form-data">
+        <input type="hidden" asp-for="EditProduct.Id" />
+
+        <div class="form-group">
+            <label asp-for="EditProduct.Name"></label>
+            <input asp-for="EditProduct.Name" class="form-control" />
+            <span asp-validation-for="EditProduct.Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="EditProduct.Description"></label>
+            <input asp-for="EditProduct.Description" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="EditProduct.Size"></label>
+            <input asp-for="EditProduct.Size" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="EditProduct.Color"></label>
+            <input asp-for="EditProduct.Color" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="EditProduct.Price"></label>
+            <input asp-for="EditProduct.Price" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="EditProduct.StockQuantity"></label>
+            <input asp-for="EditProduct.StockQuantity" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="EditProduct.ImageFile" class="form-label">Upload New Image</label>
+            <input class="form-control"
+                   type="file"
+                   accept="image/*"
+                   asp-for="EditProduct.ImageFile" />
+        </div>
+
+        <div class="form-group">
+            <label>Select SubCategory</label>
+            <select asp-for="EditProduct.SubCategoryId"
+                    asp-items="Model.SubCategoriesOption"
+                    class="form-control">
+                <option value="">-- Select a SubCategory --</option>
+            </select>
+            <span asp-validation-for="EditProduct.SubCategoryId" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-success mt-2">Update Product</button>
+    </form>
+</body>
