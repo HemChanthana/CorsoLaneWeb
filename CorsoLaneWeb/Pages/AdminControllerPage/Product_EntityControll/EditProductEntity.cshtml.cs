@@ -9,13 +9,13 @@ namespace CorsoLaneWeb.Pages.AdminControllerPage.Product_EntityControll
     public class EditProductEntityModel(AppDBContext db) : PageModel
     {
         [BindProperty]
-        public products_entity EditProduct { get; set; }
+        public Product EditProduct { get; set; }
 
         public SelectList SubCategoriesOption { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            EditProduct = await db.products.FindAsync(id);
+            EditProduct = await db.Products.FindAsync(id);
 
             if (EditProduct == null)
             {
@@ -35,7 +35,7 @@ namespace CorsoLaneWeb.Pages.AdminControllerPage.Product_EntityControll
                 return Page();
             }
 
-            var productInDb = await db.products.FindAsync(EditProduct.Id);
+            var productInDb = await db.Products.FindAsync(EditProduct.Id);
             if (productInDb == null)
             {
                 return NotFound();

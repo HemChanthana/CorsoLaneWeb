@@ -9,7 +9,7 @@ namespace CorsoLaneWeb.Pages.AdminControllerPage.Product_EntityControll
     public class AddProductEntityModel(AppDBContext db, IWebHostEnvironment _environment) : PageModel
     {
         [BindProperty]
-        public products_entity NewProduct { get; set; }
+        public Product NewProduct { get; set; }
 
         public List<SelectListItem> SubCategoriesOption { get; set; }
 
@@ -77,7 +77,7 @@ namespace CorsoLaneWeb.Pages.AdminControllerPage.Product_EntityControll
                 NewProduct.ImagePath = null;
             }
 
-            await db.products.AddAsync(NewProduct);
+            await db.Products.AddAsync(NewProduct);
             await db.SaveChangesAsync();
 
             Console.WriteLine($"Successfully added product with SubCategoryId: {NewProduct.SubCategoryId}");

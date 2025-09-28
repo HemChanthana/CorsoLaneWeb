@@ -13,13 +13,13 @@ namespace CorsoLaneWeb.Models
 
 
         public DbSet<Order> Orders { get; set; }
-        public DbSet<products_entity> products { get; set; }
+        public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<SubCategory> SubCategories { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }  
         public DbSet<CategorySubCategory> CategorySubCategories { get; set; }
-
-
+        public object ShoppingCartItems { get; internal set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

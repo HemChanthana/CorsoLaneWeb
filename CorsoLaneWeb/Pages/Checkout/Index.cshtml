@@ -1,0 +1,63 @@
+﻿@* Pages/Checkout/Index.cshtml *@
+@page
+@model IndexModel
+
+<div class="container">
+    <h2>Checkout</h2>
+
+    <div class="row">
+        <div class="col-md-8">
+            <form method="post">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Shipping Information</h5>
+
+                        <div class="mb-3">
+                            <label asp-for="CustomerName" class="form-label"></label>
+                            <input asp-for="CustomerName" class="form-control" />
+                            <span asp-validation-for="CustomerName" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="CustomerEmail" class="form-label"></label>
+                            <input asp-for="CustomerEmail" class="form-control" />
+                            <span asp-validation-for="CustomerEmail" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="ShippingAddress" class="form-label"></label>
+                            <textarea asp-for="ShippingAddress" class="form-control" rows="3"></textarea>
+                            <span asp-validation-for="ShippingAddress" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-success mt-3">Place Order</button>
+            </form>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Order Summary</h5>
+                    @foreach (var item in Model.CartItems)
+                    {
+                        <div class="d-flex justify-content-between">
+                            <span>@item.Product?.Name × @item.Quantity</span>
+                            <span>$@(item.Product?.Price * item.Quantity)</span>
+                        </div>
+                    }
+                    <hr>
+                    <div class="d-flex justify-content-between">
+                        <strong>Total:</strong>
+                        <strong>$@Model.Total</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

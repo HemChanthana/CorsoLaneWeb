@@ -6,38 +6,43 @@ namespace CorsoLaneWeb.Models
     public class Order
     {
 
-
         [Key]
-        public int Id { get; set; } // Primary Key
+        public int Id { get; set; }
 
-        // --- User Relationship ---
-        public string UserId { get; set; } // Foreign Key to the User table
-        [ForeignKey("UserId")]
-        public user User { get; set; }
-
-        // --- Order Information ---
-        public DateTime OrderDate { get; set; }
-        public decimal OrderTotal { get; set; }
-
-        // --- Shipping Information ---
         [Required]
-        public string Name { get; set; }
-        [Required]
-        public string StreetAddress { get; set; }
-        [Required]
-        public string City { get; set; }
-        [Required]
-        public string State { get; set; }
-        [Required]
-        public string PostalCode { get; set; }
-        [Required]
-        public string PhoneNumber { get; set; }
+        public string OrderNumber { get; set; } = Guid.NewGuid().ToString();
 
-        // Navigation property to the line items
-        public ICollection<OrderItem> OrderItems { get; set; }
+        [Required]
+        public DateTime OrderDate { get; set; } = DateTime.UtcNow;
 
+        [Required]
+        public decimal TotalAmount { get; set; }
 
+        // Customer information
+        [Required]
+        [StringLength(100)]
+        public string CustomerName { get; set; } = string.Empty;
 
+        [Required]
+        [EmailAddress]
+        public string CustomerEmail { get; set; } = string.Empty;
 
+        [Required]
+        [StringLength(200)]
+        public string ShippingAddress { get; set; } = string.Empty;
+
+        public OrderStatus Status { get; set; } = OrderStatus.Pending;
+
+        // Navigation property
+        public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
+    }
+
+    public enum OrderStatus
+    {
+        Pending,
+        Confirmed,
+        Shipped,
+        Delivered,
+        Cancelled
     }
 }

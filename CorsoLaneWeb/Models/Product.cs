@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CorsoLaneWeb.Models
 {
-    public class products_entity
+    public class Product
     {
         [Key]
         public int Id { get; set; }
@@ -43,6 +43,8 @@ namespace CorsoLaneWeb.Models
         // --- SubCategory (only ID needed) ---
         [Required(ErrorMessage = "Please select a SubCategory")]
         public int SubCategoryId { get; set; }
+
+        public SubCategory? SubCategory { get; set; }
 
     }
 }

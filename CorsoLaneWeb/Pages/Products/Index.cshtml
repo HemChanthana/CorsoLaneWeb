@@ -1,0 +1,100 @@
+﻿@* Pages/Products/Index.cshtml *@
+@page "/Products/{category?}/{subcategory?}"
+@model IndexModel
+
+<div class="container">
+    <div class="row">
+        <!-- Sidebar with categories -->
+        <div class="col-md-3">
+            <div class="category-sidebar">
+                <h4>Categories</h4>
+                @foreach (var cat in Model.Categories)
+                {
+                    <div class="category-item">
+                        <a href="/Products/@cat.Name" class="category-link">
+                            @cat.Name
+                        </a>
+                        @if (cat.SubCategories?.Any() == true)
+                        {
+                            <div class="subcategories">
+                                @foreach (var subCat in cat.SubCategories)
+                                {
+                                    <a href="/Products/@cat.Name/@subCat.Name"
+                                       class="subcategory-link">
+                                        @subCat.Name
+                                    </a>
+                                }
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- Products grid -->
+        <div class="col-md-9">
+            <h2>@(Model.Category ?? "All Products")</h2>
+            @if (Model.SubCategory != null)
+            {
+                <h3>@Model.SubCategory</h3>
+            }
+
+            <div class="row">
+                @foreach (var product in Model.Products)
+                {
+                    <div class="col-md-4 mb-4">
+                        <div class="card product-card">
+                            <img src="/images/products/@product.ImagePath"
+                                 class="card-img-top" alt="@product.Name">
+                            <div class="card-body">
+                                <h5 class="card-title">@product.Name</h5>
+                                <p class="card-text">@product.Description</p>
+                                <p class="price">$@product.Price</p>
+                                <button class="btn btn-primary add-to-cart"
+                                        data-product-id="@product.Id">
+                                    Add to Cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', function() {
+                const productId = this.getAttribute('data-product-id');
+                addToCart(productId);
+            });
+        });
+
+        async function addToCart(productId) {
+            try {
+                const response = await fetch('/Cart/AddItem', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                    },
+                    body: JSON.stringify({ productId: parseInt(productId), quantity: 1 })
+                });
+
+                if (response.ok) {
+                    const cartCount = await response.json();
+                    document.getElementById('cartCount').textContent = cartCount;
+                    alert('Product added to cart!');
+                } else {
+                    const error = await response.text();
+                    alert('Error adding to cart: ' + error);
+                }
+            } catch (error) {
+                console.error('Error adding to cart:', error);
+                alert('Error adding to cart. Please refresh the page and try again.');
+            }
+        }
+    </script>
+}

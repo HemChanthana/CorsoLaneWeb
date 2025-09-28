@@ -16,7 +16,7 @@ namespace CorsoLaneWeb.Models
         [Required]
         public int ProductId { get; set; }
         [ForeignKey("ProductId")]
-        public products_entity Products { get; set; }
+        public Product Products { get; set; }
 
         public int Quantity { get; set; }
         public decimal Price { get; set; }

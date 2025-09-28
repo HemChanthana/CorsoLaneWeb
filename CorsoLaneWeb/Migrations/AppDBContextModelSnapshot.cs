@@ -22,6 +22,33 @@ namespace CorsoLaneWeb.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("CorsoLaneWeb.Models.CartItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SessionId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("CartItems");
+                });
+
             modelBuilder.Entity("CorsoLaneWeb.Models.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -62,43 +89,39 @@ namespace CorsoLaneWeb.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("City")
+                    b.Property<string>("CustomerEmail")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("CustomerName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<decimal>("OrderTotal")
+                    b.Property<string>("OrderNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShippingAddress")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("TotalAmount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PostalCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("State")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StreetAddress")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
+                    b.Property<string>("userId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("userId");
 
                     b.ToTable("Orders");
                 });
@@ -132,24 +155,7 @@ namespace CorsoLaneWeb.Migrations
                     b.ToTable("OrderItems");
                 });
 
-            modelBuilder.Entity("CorsoLaneWeb.Models.SubCategory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SubCategories");
-                });
-
-            modelBuilder.Entity("CorsoLaneWeb.Models.products_entity", b =>
+            modelBuilder.Entity("CorsoLaneWeb.Models.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -192,7 +198,29 @@ namespace CorsoLaneWeb.Migrations
 
                     b.HasIndex("SubCategoryId");
 
-                    b.ToTable("products");
+                    b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("CorsoLaneWeb.Models.SubCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("SubCategories");
                 });
 
             modelBuilder.Entity("CorsoLaneWeb.Models.user", b =>
@@ -401,6 +429,17 @@ namespace CorsoLaneWeb.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("CorsoLaneWeb.Models.CartItem", b =>
+                {
+                    b.HasOne("CorsoLaneWeb.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("CorsoLaneWeb.Models.CategorySubCategory", b =>
                 {
                     b.HasOne("CorsoLaneWeb.Models.Category", "Category")
@@ -422,13 +461,9 @@ namespace CorsoLaneWeb.Migrations
 
             modelBuilder.Entity("CorsoLaneWeb.Models.Order", b =>
                 {
-                    b.HasOne("CorsoLaneWeb.Models.user", "User")
+                    b.HasOne("CorsoLaneWeb.Models.user", null)
                         .WithMany("Orders")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
+                        .HasForeignKey("userId");
                 });
 
             modelBuilder.Entity("CorsoLaneWeb.Models.OrderItem", b =>
@@ -439,7 +474,7 @@ namespace CorsoLaneWeb.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CorsoLaneWeb.Models.products_entity", "Products")
+                    b.HasOne("CorsoLaneWeb.Models.Product", "Products")
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -450,13 +485,26 @@ namespace CorsoLaneWeb.Migrations
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("CorsoLaneWeb.Models.products_entity", b =>
+            modelBuilder.Entity("CorsoLaneWeb.Models.Product", b =>
                 {
-                    b.HasOne("CorsoLaneWeb.Models.SubCategory", null)
+                    b.HasOne("CorsoLaneWeb.Models.SubCategory", "SubCategory")
                         .WithMany("Products")
                         .HasForeignKey("SubCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("SubCategory");
+                });
+
+            modelBuilder.Entity("CorsoLaneWeb.Models.SubCategory", b =>
+                {
+                    b.HasOne("CorsoLaneWeb.Models.Category", "Category")
+                        .WithMany("SubCategories")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -513,6 +561,8 @@ namespace CorsoLaneWeb.Migrations
             modelBuilder.Entity("CorsoLaneWeb.Models.Category", b =>
                 {
                     b.Navigation("CategorySubCategories");
+
+                    b.Navigation("SubCategories");
                 });
 
             modelBuilder.Entity("CorsoLaneWeb.Models.Order", b =>
