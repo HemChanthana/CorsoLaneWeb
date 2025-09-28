@@ -18,6 +18,7 @@ namespace CorsoLaneWeb.Models
         public DbSet<SubCategory> SubCategories { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<CategorySubCategory> CategorySubCategories { get; set; }
+        public DbSet<CartItem> CartItems { get; set; } // * new *
 
 
 
@@ -41,6 +42,19 @@ namespace CorsoLaneWeb.Models
                 .WithMany(sc => sc.CategorySubCategories)
                 .HasForeignKey(cs => cs.SubCategoryId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            // Configure CartItem relationships * new *
+            modelBuilder.Entity<CartItem>()
+                .HasOne(ci => ci.User)
+                .WithMany()
+                .HasForeignKey(ci => ci.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<CartItem>()
+                .HasOne(ci => ci.Product)
+                .WithMany(p => p.CartItems)
+                .HasForeignKey(ci => ci.ProductId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
 
 

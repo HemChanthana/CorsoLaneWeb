@@ -44,5 +44,13 @@ namespace CorsoLaneWeb.Models
         [Required(ErrorMessage = "Please select a SubCategory")]
         public int SubCategoryId { get; set; }
 
+        // * new * //
+
+        [ForeignKey("SubCategoryId")]
+        public SubCategory SubCategory { get; set; }
+
+        // Navigation property for cart
+        public ICollection<CartItem> CartItems { get; set; } = new List<CartItem>();
+
     }
 }

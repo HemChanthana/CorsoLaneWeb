@@ -1,0 +1,48 @@
+﻿@page "{id:int}"
+@model CorsoLaneWeb.Pages.Products.CategoryModel
+@{
+    ViewData["Title"] = Model.Category.Name;
+}
+
+<div class="container">
+    <h1>@Model.Category.Name</h1>
+
+    <!-- Subcategories -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h4>Subcategories</h4>
+            <div class="d-flex gap-2">
+                @foreach (var subCat in Model.SubCategories)
+                {
+                    <a href="/Products/SubCategory/@subCat.Id" class="btn btn-outline-secondary">
+                        @subCat.Name
+                    </a>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- Products in this category -->
+    <div class="row">
+        @foreach (var product in Model.Products)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <!-- Same product card as Index page -->
+                    @if (!string.IsNullOrEmpty(product.ImagePath))
+                    {
+                        <img src="/images/products/@product.ImagePath" class="card-img-top" alt="@product.Name">
+                    }
+                    <div class="card-body">
+                        <h5 class="card-title">@product.Name</h5>
+                        <p class="card-text">$@product.Price</p>
+                        <form method="post" asp-page-handler="AddToCart">
+                            <input type="hidden" name="productId" value="@product.Id" />
+                            <button type="submit" class="btn btn-primary">Add to Cart</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
