@@ -9,10 +9,9 @@ namespace CorsoLaneWeb.Models
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty; // "Shirts", "Pants", etc.
-        public int CategoryId { get; set; }
-        public Category? Category { get; set; }
 
-        public ICollection<Product>? Products { get; set; }
+
+        public ICollection<Product> Products { get; set; } = new List<Product>(); 
 
         public ICollection<CategorySubCategory> CategorySubCategories { get; set; } = new List<CategorySubCategory>();
         // public ICollection<Product> Products { get; set; } = new List<Product>();

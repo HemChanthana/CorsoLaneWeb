@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CorsoLaneWeb.Pages.AdminControllerPage.Sub_CategoryEntiity
 {
-    public class AddSub_CategoryEntityModel(AppDBContext db): PageModel
+    public class AddSub_CategoryEntityModel(AppDBContext db) : PageModel
     {
 
 

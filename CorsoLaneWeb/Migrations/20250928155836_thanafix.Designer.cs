@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CorsoLaneWeb.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20250928102142_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250928155836_thanafix")]
+    partial class thanafix
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -212,7 +212,7 @@ namespace CorsoLaneWeb.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CategoryId")
+                    b.Property<int?>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -501,13 +501,9 @@ namespace CorsoLaneWeb.Migrations
 
             modelBuilder.Entity("CorsoLaneWeb.Models.SubCategory", b =>
                 {
-                    b.HasOne("CorsoLaneWeb.Models.Category", "Category")
+                    b.HasOne("CorsoLaneWeb.Models.Category", null)
                         .WithMany("SubCategories")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
+                        .HasForeignKey("CategoryId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

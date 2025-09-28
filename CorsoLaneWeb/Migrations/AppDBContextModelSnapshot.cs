@@ -209,7 +209,7 @@ namespace CorsoLaneWeb.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CategoryId")
+                    b.Property<int?>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -498,13 +498,9 @@ namespace CorsoLaneWeb.Migrations
 
             modelBuilder.Entity("CorsoLaneWeb.Models.SubCategory", b =>
                 {
-                    b.HasOne("CorsoLaneWeb.Models.Category", "Category")
+                    b.HasOne("CorsoLaneWeb.Models.Category", null)
                         .WithMany("SubCategories")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
+                        .HasForeignKey("CategoryId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
