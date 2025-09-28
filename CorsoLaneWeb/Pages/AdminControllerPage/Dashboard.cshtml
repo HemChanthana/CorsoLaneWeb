@@ -17,29 +17,90 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="~/css/dashboard.css" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f4f9; /* Dashboard background */
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            height: 100vh;
+            background-color: #1c1c1c;
+        }
+
+            .sidebar a {
+                color: #fff;
+                text-decoration: none;
+                padding: 10px 15px;
+                display: block;
+                border-radius: 5px;
+                margin-bottom: 5px;
+                transition: 0.3s;
+            }
+
+                .sidebar a:hover {
+                    background-color: #83190;
+                    color: #fff;
+                }
+
+        .main-content {
+            flex-grow: 1;
+            padding: 30px;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+            table th, table td {
+                padding: 12px 15px;
+                text-align: left;
+            }
+
+            table th {
+                background-color: #83190;
+                color: #fff;
+            }
+
+            table tr:nth-child(even) {
+                background-color: #f8f8f8;
+            }
+
+            table tr:hover {
+                background-color: #ffd699;
+            }
+
+        h1 {
+            color: #1c1c1c;
+        }
+    </style>
 </head>
 
 <body>
     <main class="d-flex">
         <!-- Sidebar -->
-        <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px; height: 100vh;">
-            <a href="/" class="d-flex align-items-center mb-3 text-white text-decoration-none">
-                <span class="fs-4">Dashboard</span>
-            </a>
+        <div class="d-flex flex-column p-3 sidebar">
+            <a href="/" class="fs-4 mb-3 text-white text-decoration-none">Dashboard</a>
             <hr />
             <ul class="nav nav-pills flex-column mb-auto">
-                <li><a href="#products" class="nav-link text-white" id="menuProducts">Products</a></li>
-                <li><a href="#orders" class="nav-link text-white" id="menuOrders">Orders</a></li>
-                <li><a href="#customers" class="nav-link text-white" id="menuCustomers">Customers</a></li>
+                <li><a href="#products" class="nav-link" id="menuProducts">Products</a></li>
+                <li><a href="#orders" class="nav-link" id="menuOrders">Orders</a></li>
+                <li><a href="#customers" class="nav-link" id="menuCustomers">Customers</a></li>
             </ul>
         </div>
 
         <!-- Main Content -->
-        <div class="flex-grow-1 p-4" id="mainContent">
-            <h1>Welcome to the Admin Dashboard</h1>
-            <p>Click on the sidebar items to load data dynamically.</p>
+        <div class="main-content" id="mainContent">
+            <h1>Welcome to Admin Dashboard</h1>
+            <p>Select a category from the sidebar to view details.</p>
         </div>
     </main>
 
@@ -53,7 +114,7 @@
 
         document.getElementById('menuProducts').addEventListener('click', e => {
             e.preventDefault();
-            loadPartial('_ProductList');
+            loadPartial('ProductList');
         });
 
         document.getElementById('menuOrders').addEventListener('click', e => {
@@ -63,7 +124,7 @@
 
         document.getElementById('menuCustomers').addEventListener('click', e => {
             e.preventDefault();
-            loadPartial('CustomersPartial');
+            loadPartial('CustomerList');
         });
     </script>
 </body>
