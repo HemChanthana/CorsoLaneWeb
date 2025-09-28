@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{id:int}"
 @model CorsoLaneWeb.Pages.AdminControllerPage.Product_EntityControll.DeleteProductEntityModel
 @{
 }
@@ -7,6 +7,29 @@
 
 
 </head>
-<h1>
-	Delete Product Entity
-</h1>	
+<div class="row justify-content-center delete-container">
+    <div class="col-md-6">
+        <section class="section">
+            <h2>Delete Category</h2>
+            <hr />
+
+            <div class="delete-box">
+                <p>
+                    Are you sure you want to delete
+                    <strong>@Model.Product_Entity.Name</strong>?
+                </p>
+
+                <form method="post">
+                    <div class="btn-group">
+                        <button type="submit" class="btn btn-dark btn-lg confirm-btn">
+                            Yes, Delete
+                        </button>
+                        <a asp-page="/Index" class="btn btn-outline-dark btn-lg cancel-btn">
+                            Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+</div>

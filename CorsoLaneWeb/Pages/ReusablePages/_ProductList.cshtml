@@ -1,0 +1,16 @@
+﻿@model CorsoLaneWeb.Models.products_entity
+
+<div class="card mb-3">
+    @if (!string.IsNullOrEmpty(Model.ImagePath))
+    {
+        <img src="~/uploads/@Model.ImagePath" class="card-img-top" alt="@Model.Name" />
+    }
+    <div class="card-body">
+        <h5 class="card-title">@Model.Name</h5>
+        <p class="card-text">@Model.Description</p>
+        <p><strong>Price:</strong> $@Model.Price</p>
+        <p><strong>Color:</strong> @Model.Color</p>
+        <p><strong>Size:</strong> @Model.Size</p>
+        <p><strong>Stock:</strong> @Model.StockQuantity</p>
+    </div>
+</div>

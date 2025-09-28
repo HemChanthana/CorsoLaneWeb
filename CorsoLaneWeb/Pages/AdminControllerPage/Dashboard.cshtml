@@ -1,78 +1,69 @@
 ﻿@page
 @model CorsoLaneWeb.Pages.AdminControllerPage.DashboardModel
 @{
+    ViewData["Title"] = "Admin Dashboard";
 }
 
-
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewData["Title"]</title>
+
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
 
-    <!-- Google Fonts Inter -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
-    <!-- Page-specific CSS -->
-    <link rel="stylesheet" href="~/css/IndexStyling.css" />
-
-
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="~/css/dashboard.css" />
 </head>
-<header>
-  <!-- Sidebar -->
-  <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
-    <div class="position-sticky">
-      <div class="list-group list-group-flush mx-3 mt-4">
-        <a
-          href="#"
-          class="list-group-item list-group-item-action py-2 ripple"
-          aria-current="true"
-        >
-          <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Admin dashboard</span>
-        </a>
-        <a href="#" class="list-group-item list-group-item-action py-2 ripple active">
-          <i class="fas fa-chart-area fa-fw me-3"></i><span>View Customer</span>
-        </a>
-        <a asp-page="/AdminControllerPage/Sub_CategoryEntiity/Index1" class="list-group-item list-group-item-action py-2 ripple"
-          ><i class="fas fa-lock fa-fw me-3"></i><span>Manage SubCategories  </span> </a>
 
+<body>
+    <main class="d-flex">
+        <!-- Sidebar -->
+        <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px; height: 100vh;">
+            <a href="/" class="d-flex align-items-center mb-3 text-white text-decoration-none">
+                <span class="fs-4">Dashboard</span>
+            </a>
+            <hr />
+            <ul class="nav nav-pills flex-column mb-auto">
+                <li><a href="#products" class="nav-link text-white" id="menuProducts">Products</a></li>
+                <li><a href="#orders" class="nav-link text-white" id="menuOrders">Orders</a></li>
+                <li><a href="#customers" class="nav-link text-white" id="menuCustomers">Customers</a></li>
+            </ul>
+        </div>
 
+        <!-- Main Content -->
+        <div class="flex-grow-1 p-4" id="mainContent">
+            <h1>Welcome to the Admin Dashboard</h1>
+            <p>Click on the sidebar items to load data dynamically.</p>
+        </div>
+    </main>
 
-        <a asp-page="/AdminControllerPage/CategoryControll/Index" class="list-group-item list-group-item-action py-2 ripple"
-          ><i class="fas fa-chart-line fa-fw me-3"></i><span>Manage Category</span></a>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        async function loadPartial(handler) {
+            const res = await fetch(`/AdminControllerPage/Dashboard?handler=${handler}`);
+            const html = await res.text();
+            document.getElementById('mainContent').innerHTML = html;
+        }
 
+        document.getElementById('menuProducts').addEventListener('click', e => {
+            e.preventDefault();
+            loadPartial('_ProductList');
+        });
 
+        document.getElementById('menuOrders').addEventListener('click', e => {
+            e.preventDefault();
+            loadPartial('OrdersPartial');
+        });
 
-
-                <a asp-page="/AdminControllerPage/Product_EntityControll/Index" class="list-group-item list-group-item-action py-2 ripple">
-          <i class="fas fa-chart-pie fa-fw me-3"></i><span>Manage Prouducts</span>
-        </a>
-        <a asp-page="" class="list-group-item list-group-item-action py-2 ripple"
-          ><i class="fas fa-chart-bar fa-fw me-3"></i><span>Track Orders</span></a>
-      
-      </div>
-
-    </div>
-  </nav>
-  <!-- Sidebar -->
-
-  <!-- Navbar -->
-  
-  <!-- Navbar -->
-</header>
-<!--Main Navigation-->
-
-<!--Main layout-->
-<main style="margin-top: 58px;">
-  <div class="container pt-4"></div>
-</main>
-
-
-
-<script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-</script>
-
-
-
- 
+        document.getElementById('menuCustomers').addEventListener('click', e => {
+            e.preventDefault();
+            loadPartial('CustomersPartial');
+        });
+    </script>
+</body>
