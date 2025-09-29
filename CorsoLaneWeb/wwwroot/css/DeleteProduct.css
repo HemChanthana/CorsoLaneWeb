@@ -1,0 +1,65 @@
+﻿body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: #f4f4f9;
+}
+
+.delete-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 80px 20px;
+}
+
+.delete-card {
+    width: 100%;
+    max-width: 500px;
+    background-color: #fff;
+    padding: 40px 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+h2 {
+    margin-bottom: 25px;
+}
+
+.product-info {
+    margin: 20px 0;
+}
+
+.btn-delete, .btn-cancel {
+    width: 100%;
+    padding: 10px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    color: #fff;
+    transition: 0.3s;
+}
+
+.btn-delete {
+    background-color: #831900;
+}
+
+    .btn-delete:hover {
+        background-color: #ff6a00;
+    }
+
+.btn-cancel {
+    background-color: #6c757d;
+}
+
+    .btn-cancel:hover {
+        background-color: #5a6268;
+    }
+
+.product-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}

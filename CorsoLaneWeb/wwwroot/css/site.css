@@ -2,10 +2,17 @@ html {
     font-family: 'Plus Jakarta Sans', sans-serif !important;
     font-size: 14px;
 }
-
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-size: 14px;
+}
+.nav {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-size: 14px;
+}
 @media (min-width: 768px) {
   html {
-    font-size: 16px;
+    font-size: 14px;
   }
 }
 

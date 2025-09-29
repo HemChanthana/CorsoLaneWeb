@@ -1,0 +1,36 @@
+﻿@model IEnumerable<CorsoLaneWeb.Models.products_entity>
+
+<div class="row">
+    @foreach (var product in Model)
+    {
+        <div class="col-md-4">
+            <div class="card mb-3">
+                @if (!string.IsNullOrEmpty(product.ImagePath))
+                {
+                    <img src="~/uploads/@product.ImagePath"
+                         class="card-img-top mx-auto d-block"
+                         alt="@product.Name"
+                         style="width:200px; height:200px; object-fit:cover;" />
+                }
+                <div class="card-body">
+                    <h5 class="card-title">@product.Name</h5>
+                    <p class="card-text">@product.Description</p>
+                    <p><strong>Price:</strong> $@product.Price</p>
+                    <p><strong>Color:</strong> @product.Color</p>
+                    <p><strong>Size:</strong> @product.Size</p>
+                    <p><strong>Stock:</strong> @product.StockQuantity</p>
+                </div>
+            </div>
+            <a class="btn btn-primary mb-3"
+               asp-page="/AdminControllerPage/Product_EntityControll/EditProductEntity"
+               asp-route-id="@product.Id">
+                Edit Product
+            </a>
+
+            <a class="btn btn-primary mb-3"
+               asp-page="/AdminControllerPage/Product_EntityControll/Index">
+                Manage All Products
+            </a>
+        </div>
+    }
+</div>

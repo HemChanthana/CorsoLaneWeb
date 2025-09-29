@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using System.Collections.Generic; // Add this for ICollection
+using System.Collections.Generic; 
 
 namespace CorsoLaneWeb.Models
 {

@@ -1,12 +1,39 @@
-﻿@page
+﻿@page "{id:int}"
 @model CorsoLaneWeb.Pages.AdminControllerPage.Product_EntityControll.DeleteProductEntityModel
 @{
 }
 
-<head> 
-
-
+<head>
+    <link rel="stylesheet" href="~/css/DeleteProduct.css" />
+   
 </head>
-<h1>
-	Delete Product Entity
-</h1>	
+
+<div class="delete-container">
+    <div class="delete-card">
+        <h2>Confirm Delete Product</h2>
+
+        @if (Model.products != null)
+        {
+            @if (!string.IsNullOrEmpty(Model.products.ImagePath))
+            {
+                <img src="~/uploads/@Model.products.ImagePath" alt="@Model.products.Name" class="product-image" />
+            }
+
+            <div class="product-info">
+                <p><strong>Name:</strong> @Model.products.Name</p>
+                <p><strong>Price:</strong> @Model.products.Price.ToString("C")</p>
+                <p><strong>Stock:</strong> @Model.products.StockQuantity</p>
+            </div>
+
+            <form method="post">
+                <button type="submit" class="btn-delete">Yes, Delete</button>
+                <a asp-page="./Index" class="btn-cancel">Cancel</a>
+            </form>
+        }
+        else
+        {
+            <p>Product not found.</p>
+            <a asp-page="./Index" class="btn-cancel">Back to List</a>
+        }
+    </div>
+</div>

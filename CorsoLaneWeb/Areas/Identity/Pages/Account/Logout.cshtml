@@ -4,18 +4,70 @@
     ViewData["Title"] = "Log out";
 }
 
-<header>
-    <h1>@ViewData["Title"]</h1>
-    @{
-        if (User.Identity?.IsAuthenticated ?? false)
+<head>
+    <link rel="stylesheet" href="~/css/loginStyling.css" />
+    <style>
+        .logout-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+            font-family: "Plus Jakarta Sans", sans-serif;
+        }
+
+        .logout-card {
+            background-color: #fff;
+            padding: 40px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+            .logout-card h2 {
+                margin-bottom: 20px;
+                color: #1c1c1c;
+            }
+
+        .btn_logout {
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
+            border-radius: 8px;
+            background-color: #83190;
+            color: #fff;
+            border: none;
+            transition: 0.3s;
+        }
+
+            .btn_logout:hover {
+                background-color: #ff6a00;
+                color: #fff;
+            }
+
+        .logout-message {
+            margin-top: 20px;
+            font-size: 1rem;
+            color: #333;
+        }
+    </style>
+</head>
+
+<div class="logout-container">
+    <div class="logout-card">
+        <h2>@ViewData["Title"]</h2>
+
+        @if (User.Identity?.IsAuthenticated ?? false)
         {
             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
-                <button type="submit" class="nav-link btn btn-link text-dark">Click here to Logout</button>
+                <button type="submit" class="btn_logout">Logout</button>
             </form>
         }
         else
         {
-            <p>You have successfully logged out of the application.</p>
+            <p class="logout-message">You have successfully logged out of the application.</p>
+            <p><a asp-page="/Login" class="btn_logout">Login Again</a></p>
         }
-    }
-</header>
+    </div>
+</div>

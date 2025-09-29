@@ -1,52 +1,163 @@
 ﻿@page
 @model CorsoLaneWeb.Pages.AdminControllerPage.Sub_CategoryEntiity.Index1Model
+
 @{
+    ViewData["Title"] = "SubCategory List";
 }
 
-
-<table id="datatable" class="table table-striped" style="width: 100%">
-    <thead>
-        <tr>
-            <th>No</th>
-            <th>SubCategory</th>
-            <th>Categories</th>
-            <th style="width: 200px">Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        <!--Loop through Model.SubCategories and query that SubCategory, and inside that we get loop through -->
-        @{
-            int i = 0;
-            foreach (var sub in Model.SubCategories)
-            {
-                <tr>
-                    <td>@(++i)</td>
-                    <td>@sub.Name</td>
-                    <td>
-                        @{
-                            var categoryNames = new List<string>();
-                            foreach(var csc in sub.CategorySubCategories)
-                            {
-                                // ne var csc = sub.CategorySubCategories is getting a  ( Categories which are the , (subcategories link  to the Category) in CategorySubCategories joined table
-                                categoryNames.Add(csc.Category.Name);
-                            }
-                        }
-                        @string.Join(", ", categoryNames)
-                    </td>
-                    <td>
-                        <a class="btn btn-primary btn-sm"
-                           asp-page="/AdminControllerPage/Sub_CategoryEntiity/EditSub_Category"
-                           asp-route-id="@sub.Id"
-                           role="button">Edit</a>
-
-                        <a class="btn btn-danger btn-sm"
-                           asp-page="/AdminControllerPage/Sub_CategoryEntiity/DeleteSub_Category"
-                           asp-route-id="@sub.Id">
-                            Delete
-                        </a>
-                    </td>
-                </tr>
-            }
+<head>
+    <link rel="stylesheet" href="~/css/loginStyling.css" />
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f4f4f9;
         }
-    </tbody>
-</table>
+
+        .subcategory-container {
+            display: flex;
+            justify-content: center;
+            padding: 50px 20px;
+        }
+
+        .subcategory-card {
+            width: 100%;
+            max-width: 900px;
+            background-color: #fff;
+            padding: 30px 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        h3 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+            table th, table td {
+                padding: 12px 10px;
+                text-align: left;
+                border-bottom: 1px solid #ddd;
+                vertical-align: middle;
+            }
+
+            table th {
+                background-color: #831900;
+                color: #fff;
+            }
+
+            table tr:hover {
+                background-color: #f3e6e0;
+            }
+
+        .btn-action {
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: 0.3s;
+            margin-right: 5px;
+            text-decoration: none;
+        }
+
+        .btn-edit {
+            background-color: #831900;
+        }
+
+            .btn-edit:hover {
+                background-color: #ff6a00;
+            }
+
+        .btn-delete {
+            background-color: #d32f2f;
+        }
+
+            .btn-delete:hover {
+                background-color: #ff6a00;
+            }
+
+        .btn-create {
+            display: block;
+            margin: 0 auto 20px auto;
+            background-color: #831900;
+            color: #fff;
+            border-radius: 8px;
+            padding: 10px 15px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+            .btn-create:hover {
+                background-color: #ff6a00;
+            }
+    </style>
+</head>
+
+<div class="subcategory-container">
+    <div class="subcategory-card">
+        <h3>SubCategory List</h3>
+        <a class="btn-create" asp-page="/AdminControllerPage/Sub_CategoryEntiity/CreateSub_Category">Create New SubCategory</a>
+
+        @if (Model.SubCategories != null && Model.SubCategories.Any())
+        {
+            <table>
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>SubCategory</th>
+                        <th>Categories</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int i = 0;
+                        foreach (var sub in Model.SubCategories)
+                        {
+                            <tr>
+                                <td>@(++i)</td>
+                                <td>@sub.Name</td>
+                                <td>
+                                    @{
+                                        var categoryNames = new List<string>();
+                                        foreach (var csc in sub.CategorySubCategories)
+                                        {
+                                            categoryNames.Add(csc.Category.Name);
+                                        }
+                                    }
+                                    @string.Join(", ", categoryNames)
+                                </td>
+                                <td>
+                                    <a class="btn-action btn-edit"
+                                       asp-page="/AdminControllerPage/Sub_CategoryEntiity/EditSub_Category"
+                                       asp-route-id="@sub.Id">Edit</a>
+                                    <a class="btn-action btn-delete"
+                                       asp-page="/AdminControllerPage/Sub_CategoryEntiity/DeleteSub_Category"
+                                       asp-route-id="@sub.Id">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>No</th>
+                        <th>SubCategory</th>
+                        <th>Categories</th>
+                        <th>Action</th>
+                    </tr>
+                </tfoot>
+            </table>
+        }
+        else
+        {
+            <p class="text-center mt-3">No SubCategories found.</p>
+        }
+    </div>
+</div>
