@@ -9,7 +9,7 @@ namespace CorsoLaneWeb.Pages.AdminControllerPage.Sub_CategoryEntiity
     {
        
 
-               public IList<SubCategory> SubCategories
+         public IList<SubCategory> SubCategories
         { get; set; }
 
         public async Task OnGetAsync()
