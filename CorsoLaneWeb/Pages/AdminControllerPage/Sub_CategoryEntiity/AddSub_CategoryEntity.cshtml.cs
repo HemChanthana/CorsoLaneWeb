@@ -48,7 +48,7 @@ namespace CorsoLaneWeb.Pages.AdminControllerPage.Sub_CategoryEntiity
                 db.SaveChanges();
             }
 
-            return RedirectToPage("/Admin/ListSubCategories");
+            return RedirectToPage("/AdminControllerPage/Sub_CategoryEntiity/Index1");
         }
     }
 }
