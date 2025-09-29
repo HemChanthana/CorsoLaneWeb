@@ -17,28 +17,63 @@ namespace CorsoLaneWeb.Pages.Products
             _userManager = userManager;
         }
 
-        public List<Category> Categories { get; set; }
-        public List<products_entity> Products { get; set; }
+        public List<products_entity> Products { get; set; } = new();
+        public string SearchTerm { get; set; }
+        public string Filter { get; set; } = "all";
 
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(string search, string filter)
         {
-            Categories = await _context.Categories
-                .Include(c => c.CategorySubCategories)
-                .ThenInclude(cs => cs.SubCategory)
-                .ToListAsync();
+            SearchTerm = search;
+            Filter = filter ?? "all";
 
-            Products = await _context.products
+            var query = _context.products
                 .Include(p => p.SubCategory)
                 .Where(p => p.StockQuantity > 0)
-                .ToListAsync();
+                .AsQueryable();
+
+            // Apply search filter
+            if (!string.IsNullOrEmpty(search))
+            {
+                query = query.Where(p =>
+                    p.Name.Contains(search) ||
+                    p.Description.Contains(search) ||
+                    p.Color.Contains(search));
+            }
+
+            // Apply other filters
+            switch (filter)
+            {
+                case "new":
+                    // Assuming you have a CreatedDate property
+                    query = query.OrderByDescending(p => p.Id).Take(10);
+                    break;
+                case "popular":
+                    // You might want to add an OrderCount property later
+                    query = query.OrderByDescending(p => p.Id).Take(10);
+                    break;
+                case "sale":
+                    // You might want to add a IsOnSale property later
+                    query = query.Where(p => p.Price < 50); // Example sale filter
+                    break;
+            }
+
+            Products = await query.ToListAsync();
         }
 
         public async Task<IActionResult> OnPostAddToCartAsync(int productId, int quantity)
         {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
+            if (!User.Identity.IsAuthenticated)
             {
-                return RedirectToPage("/Account/Login", new { area = "Identity" });
+                return RedirectToPage("/Account/Login", new { area = "Identity", returnUrl = "/Products" });
+            }
+
+            var user = await _userManager.GetUserAsync(User);
+            var product = await _context.products.FindAsync(productId);
+
+            if (product == null || product.StockQuantity < quantity)
+            {
+                TempData["Error"] = "Product not available or insufficient stock.";
+                return RedirectToPage();
             }
 
             var existingCartItem = await _context.CartItems
@@ -60,7 +95,7 @@ namespace CorsoLaneWeb.Pages.Products
             }
 
             await _context.SaveChangesAsync();
-            TempData["Success"] = "Product added to cart!";
+            TempData["Success"] = $"{product.Name} added to cart!";
             return RedirectToPage();
         }
     }

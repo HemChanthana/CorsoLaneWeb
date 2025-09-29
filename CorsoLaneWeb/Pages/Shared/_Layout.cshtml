@@ -4,6 +4,35 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - CorsoLaneWeb</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/CorsoLaneWeb.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <!-- Use partial without model -->
+    <partial name="/Pages/ReusablePages/_navbarPage.cshtml" />
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+
+
+
+@* <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - CorsoLaneWeb</title>
     <script type="importmap"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -15,18 +44,14 @@
     <header>
 
         <partial name="/Pages/ReusablePages/_navbarPage.cshtml" />
-        <!-- In the navigation section -->
-        @* <li class="nav-item">
-            <a class="nav-link" href="/Cart">
-                <i class="fas fa-shopping-cart"></i> Cart
-                @if (User.Identity.IsAuthenticated)
-                {
-                    <span class="badge bg-primary" id="cartCount">0</span>
-                }
-            </a>
-        </li> *@
+
 
     </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
     <div class="container">
         <main role="main" class="pb-3 mt-2">
             @RenderBody()
@@ -49,4 +74,4 @@
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
-</html>
+</html> *@

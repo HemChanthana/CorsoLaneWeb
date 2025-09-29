@@ -1,0 +1,40 @@
+﻿@page "{id:int}"
+@model CorsoLaneWeb.Pages.Products.SubCategoryModel
+@{
+    ViewData["Title"] = Model.SubCategory?.Name ?? "Products";
+}
+
+<div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Products">Products</a></li>
+            <li class="breadcrumb-item active">@Model.SubCategory?.Name</li>
+        </ol>
+    </nav>
+
+    <h1>@Model.SubCategory?.Name</h1>
+    <p class="text-muted">@Model.Products.Count products found</p>
+
+    <div class="row">
+        @foreach (var product in Model.Products)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <!-- Same product card layout as Index page -->
+                    @if (!string.IsNullOrEmpty(product.ImagePath))
+                    {
+                        <img src="/uploads/@product.ImagePath" class="card-img-top" alt="@product.Name">
+                    }
+                    <div class="card-body">
+                        <h5 class="card-title">@product.Name</h5>
+                        <p class="card-text">$@product.Price.ToString("F2")</p>
+                        <form method="post" asp-page-handler="AddToCart">
+                            <input type="hidden" name="productId" value="@product.Id" />
+                            <button type="submit" class="btn btn-primary">Add to Cart</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

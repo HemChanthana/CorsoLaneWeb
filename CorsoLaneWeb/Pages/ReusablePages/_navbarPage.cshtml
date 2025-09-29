@@ -1,11 +1,39 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using CorsoLaneWeb.Models
+@using Microsoft.EntityFrameworkCore
 
-<head>
-    <link rel="stylesheet" href="~/css/navbar_unauth.css" />
-</head>
 @inject SignInManager<user> SignInManager
 @inject UserManager<user> UserManager
+@inject AppDBContext DbContext
+
+@{
+    // Get data directly in the view (not ideal but works)
+    var categories = await DbContext.Categories
+        .Include(c => c.CategorySubCategories)
+        .ThenInclude(cs => cs.SubCategory)
+        .ToListAsync();
+
+    var categorySubCategories = new Dictionary<int, List<SubCategory>>();
+    foreach (var category in categories)
+    {
+        var subCategories = category.CategorySubCategories
+            .Select(cs => cs.SubCategory)
+            .ToList();
+        categorySubCategories[category.Id] = subCategories;
+    }
+
+    int cartItemCount = 0;
+    if (SignInManager.IsSignedIn(User))
+    {
+        var userId = UserManager.GetUserId(User);
+        if (!string.IsNullOrEmpty(userId))
+        {
+            cartItemCount = await DbContext.CartItems
+                .Where(ci => ci.UserId == userId)
+                .SumAsync(ci => ci.Quantity);
+        }
+    }
+}
 
 <nav class="navbar navbar-expand-lg bg-light px-4">
     <div class="container-fluid">
@@ -16,90 +44,99 @@
         </button>
 
         <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
-
+            <!-- Dynamic Categories Menu -->
             <ul class="navbar-nav mx-auto">
+                @foreach (var category in categories)
+                {
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-dark" href="#" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            @category.Name
+                        </a>
+                        <ul class="dropdown-menu">
+                            @if (categorySubCategories.ContainsKey(category.Id))
+                            {
+                                foreach (var subCategory in categorySubCategories[category.Id])
+                                {
+                                    <li>
+                                        <a class="dropdown-item"
+                                           href="/Products/SubCategory/@subCategory.Id">
+                                            @subCategory.Name
+                                        </a>
+                                    </li>
+                                }
+                            }
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <a class="dropdown-item fw-bold"
+                                   href="/Products/Category/@category.Id">
+                                    View All @category.Name
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                }
 
+                <!-- Explore Static Menu -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Men
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Shirts</a></li>
-                        <li><a class="dropdown-item" href="#">Pants</a></li>
-                        <li><a class="dropdown-item" href="#">Shoes</a></li>
-                    </ul>
-                </li>
-
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Women
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Dresses</a></li>
-                        <li><a class="dropdown-item" href="#">Skirts</a></li>
-                        <li><a class="dropdown-item" href="#">Jewelry</a></li>
-                    </ul>
-                </li>
-
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle text-dark" href="#" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
                         Explore
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">New Arrivals</a></li>
-                        <li><a class="dropdown-item" href="#">Best Sellers</a></li>
+                        <li><a class="dropdown-item" href="/Products">All Products</a></li>
+                        <li><a class="dropdown-item" href="/Products?filter=new">New Arrivals</a></li>
+                        <li><a class="dropdown-item" href="/Products?filter=popular">Best Sellers</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">On Sale</a></li>
+                        <li><a class="dropdown-item" href="/Products?filter=sale">On Sale</a></li>
                     </ul>
                 </li>
             </ul>
 
+            <!-- User Section -->
             @if (SignInManager.IsSignedIn(User))
             {
-               
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <span class="nav-link text-dark">Hello @User.Identity.Name!</span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="/Products/Search">Search</a>
+                    </li>
 
-                @if (SignInManager.IsSignedIn(User))
-                {
-                    <ul class="navbar-nav">
+                    @if (User.IsInRole("Admin"))
+                    {
                         <li class="nav-item">
-                            <p class="nav-link">Hello @User.Identity.Name!</p>
+                            <a class="nav-link text-dark" href="/AdminControllerPage/Dashboard">Dashboard</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" href="#">Search</a>
-                        </li>
+                    }
 
-                         @if (User.IsInRole("Admin"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" href="/AdminControllerPage/Dashboard">Dashboard</a>
-                            </li>
-                        }
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Logout">Logout</a>
+                    </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Identity"
-                               asp-page="/Account/Logout">Logout</a>
-                        </li>
-                       
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" href="#">Cart (0)</a>
-                        </li>
-                    </ul>
-
-                }
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="/Cart">
+                            Cart (@cartItemCount)
+                        </a>
+                    </li>
+                </ul>
             }
             else
             {
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link text-dark" href="#">Search</a>
+                        <a class="nav-link text-dark" href="/Products/Search">Search</a>
                     </li>
-                    <li class="nav-item"> 
-                         <a class="nav-link text-dark" asp-area="Identity" 
-                           asp-page="/Account/Login">Login</a> 
-                     </li>
-                    
                     <li class="nav-item">
-                        <a class="nav-link text-dark" href="#">Cart (0)</a>
+                        <a class="nav-link text-dark" asp-area="Identity"
+                           asp-page="/Account/Login">Login</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="/Cart">
+                            Cart (@cartItemCount)
+                        </a>
                     </li>
                 </ul>
             }
