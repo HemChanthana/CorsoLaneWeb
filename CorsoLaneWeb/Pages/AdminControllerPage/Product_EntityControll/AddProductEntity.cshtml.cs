@@ -6,16 +6,24 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CorsoLaneWeb.Pages.AdminControllerPage.Product_EntityControll
 {
-    public class AddProductEntityModel(AppDBContext db, IWebHostEnvironment _environment) : PageModel
+    public class AddProductEntityModel : PageModel
     {
+        private readonly AppDBContext _db;
+        private readonly IWebHostEnvironment _environment;
+
+        public AddProductEntityModel(AppDBContext db, IWebHostEnvironment environment)
+        {
+            _db = db;
+            _environment = environment;
+        }
+
         [BindProperty]
         public products_entity NewProduct { get; set; }
 
+        // Remove this property as it's confusing the model binding
+        // public int SelectedSubCategories { get; set; }
+
         public List<SelectListItem> SubCategoriesOption { get; set; }
-
-        public Category Category { get; set; }
-
-        public int SelectedSubCategories { get; set; }
 
         public async Task OnGet()
         {
@@ -24,7 +32,7 @@ namespace CorsoLaneWeb.Pages.AdminControllerPage.Product_EntityControll
 
         public async Task GetData()
         {
-            SubCategoriesOption = await db.CategorySubCategories
+            SubCategoriesOption = await _db.CategorySubCategories
                 .Include(csc => csc.Category)
                 .Include(csc => csc.SubCategory)
                 .Select(csc => new SelectListItem
@@ -37,6 +45,9 @@ namespace CorsoLaneWeb.Pages.AdminControllerPage.Product_EntityControll
 
         public async Task<IActionResult> OnPostAsync()
         {
+            // Debug: Check what values are coming through
+            Console.WriteLine($"SubCategoryId from form: {NewProduct?.SubCategoryId}");
+
             if (!ModelState.IsValid)
             {
                 foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
@@ -44,6 +55,14 @@ namespace CorsoLaneWeb.Pages.AdminControllerPage.Product_EntityControll
                     Console.WriteLine($"Validation Error: {error.ErrorMessage}");
                 }
 
+                await GetData();
+                return Page();
+            }
+
+            // Additional validation for SubCategoryId
+            if (NewProduct.SubCategoryId == 0)
+            {
+                ModelState.AddModelError("NewProduct.SubCategoryId", "The SubCategory field is required.");
                 await GetData();
                 return Page();
             }
@@ -73,12 +92,11 @@ namespace CorsoLaneWeb.Pages.AdminControllerPage.Product_EntityControll
             }
             else
             {
-                // optional: use placeholder
                 NewProduct.ImagePath = null;
             }
 
-            await db.products.AddAsync(NewProduct);
-            await db.SaveChangesAsync();
+            await _db.products.AddAsync(NewProduct);
+            await _db.SaveChangesAsync();
 
             Console.WriteLine($"Successfully added product with SubCategoryId: {NewProduct.SubCategoryId}");
 

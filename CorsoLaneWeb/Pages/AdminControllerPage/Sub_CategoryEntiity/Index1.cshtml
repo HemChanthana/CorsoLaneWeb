@@ -134,6 +134,10 @@
                                     @string.Join(", ", categoryNames)
                                 </td>
                                 <td>
+                                    <a class="btn-action btn-create"
+                                       asp-page="/AdminControllerPage/Sub_CategoryEntiity/AddSub_CategoryEntity"
+                                       asp-route-id="@sub.Id">Create</a>
+
                                     <a class="btn-action btn-edit"
                                        asp-page="/AdminControllerPage/Sub_CategoryEntiity/EditSub_Category"
                                        asp-route-id="@sub.Id">Edit</a>
